@@ -1,0 +1,34 @@
+[
+  {
+    "menu": "ベンチプレス",
+    "target": "胸",
+    "volume": [
+      {
+        "weight": 70,
+        "repetition": 10,
+        "set": 3
+      },
+      {
+        "weight": 80,
+        "repetition": 3,
+        "set": 1
+      }
+    ]
+  },
+  {
+    "menu": "スクワット",
+    "target": "脚",
+    "volume": [
+      {
+        "weight": 100,
+        "repetition": 5,
+        "set": 2
+      },
+      {
+        "weight": 70,
+        "repetition": 10,
+        "set": 3
+      }
+    ]
+  }
+]

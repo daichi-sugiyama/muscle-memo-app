@@ -177,7 +177,15 @@ export default {
       return target;
     },
     getProgram() {
-      return this.menuData()
+      const programArray = this.menuData.map((item) => {
+        return item.volume.map((v) => {
+          v.menu = item.menu
+          return v;
+        })
+      }).reduce((a, b) => {
+        return a.concat(b);
+      });
+      return programArray
     },
     submit() {
       console.log("--- 部位を取得 ---");
