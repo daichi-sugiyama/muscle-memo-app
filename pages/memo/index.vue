@@ -10,10 +10,16 @@
     </div>
     <div>
       <p>プログラム</p>
-      <div v-for="(items, index) in menuCount" :key="index">
+      {{ menuData }}
+      <div v-for="(items, index) in menuData" :key="index">
         <v-row>
           <v-col class="d-flex" cols="6">
-            <v-select label="menu" :items="menu" item-text="menu" item-value="id"></v-select>
+            <v-select
+              label="menu"
+              :items="menu"
+              item-text="menu"
+              item-value="id"
+            ></v-select>
           </v-col>
           <v-col v-if="index !== 0" cols="2">
             <v-btn fab dark x-small color="pink" @click="deleteMenuForm(index)">
@@ -31,7 +37,7 @@
             <v-select outlined label="set" :items="set" dense></v-select>
           </v-col>
           <v-col
-            v-if="itemIndex == Object.keys(menuCount[index]).length - 1"
+            v-if="itemIndex == Object.keys(menuData[index]).length - 1"
             class="d-flex"
             cols="2"
           >
@@ -51,7 +57,7 @@
             </v-btn>
           </v-col>
         </v-row>
-        <v-row v-if="index == Object.keys(menuCount).length - 1">
+        <v-row v-if="index == Object.keys(menuData).length - 1">
           <v-col cols="12">
             <div class="text-center">
               <v-btn rounded color="primary" dark @click="addMenuForm">
@@ -73,6 +79,17 @@
 export default {
   data() {
     return {
+      menuData: [
+        [
+          {
+            menu: "",
+            target: "",
+            weight: "",
+            repetition: "",
+            set: "",
+          },
+        ],
+      ],
       bodyTarget: [
         { id: 1, target: "胸", checked: false },
         { id: 2, target: "肩", checked: false },
@@ -82,47 +99,62 @@ export default {
         { id: 6, target: "三頭", checked: false },
       ],
       menu: [
-        { id: 1, menu: "ベンチプレス" },
-        { id: 2, menu: "スクワット" },
-        { id: 3, menu: "ベントオーバーロウ" },
+        { id: 1, menu: "ベンチプレス", target: "胸" },
+        { id: 2, menu: "スクワット", target: "脚" },
+        { id: 3, menu: "ベントオーバーロウ", target: "背中" },
       ],
       weight: [40, 50, 60, 70, 80, 90, 100],
       repetition: Array.from(new Array(20)).map((v, i) => i + 1),
       set: Array.from(new Array(10)).map((v, i) => i + 1),
-      menuCount: [[1]],
     };
   },
   methods: {
     addSetForm(index) {
       console.log("セット追加:" + index);
-      this.menuCount[index].push(1);
+      this.menuData[index].push({
+        menu: "",
+        target: "",
+        weight: "",
+        repetition: "",
+        set: "",
+      });
     },
     addMenuForm() {
       console.log("メニュー追加");
-      this.menuCount.push([1]);
+      this.menuData.push([
+        {
+          menu: "",
+          target: "",
+          weight: "",
+          repetition: "",
+          set: "",
+        },
+      ]);
     },
     deleteSetForm(index, itemIndex) {
-      console.log("セット削除:" + index);
-      this.menuCount[index].splice(itemIndex, 1);
+      console.log("セット削除:" + Number(index+1) + "個目");
+      this.menuData[index].splice(itemIndex, 1);
     },
     deleteMenuForm(index) {
-      console.log("メニュー削除");
-      this.menuCount.splice(index, 1);
+      console.log("メニュー削除" + Number(index+1) + "個目");
+      this.menuData.splice(index, 1);
     },
     getBodyTarget() {
       const checkedFilter = this.bodyTarget.filter((item) => {
-        return item.checked
+        return item.checked;
       });
-      const target = checkedFilter.map((item) => {
-        return [item.target]
-      }).reduce((a,b) => {
-        return a.concat(b);
-      });
+      const target = checkedFilter
+        .map((item) => {
+          return [item.target];
+        })
+        .reduce((a, b) => {
+          return a.concat(b);
+        });
       return target;
     },
     submit() {
       console.log("--- 部位を取得 ---");
-      console.log(this.getBodyTarget())
+      console.log(this.getBodyTarget());
       console.log("--- プログラムを取得 ---");
     },
   },
