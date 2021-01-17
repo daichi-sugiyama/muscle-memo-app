@@ -10,15 +10,16 @@
     </div>
     <div>
       <p>プログラム</p>
-      {{ menuData }}
+      デバック用:{{ menuData }}
       <div v-for="(items, index) in menuData" :key="index">
         <v-row>
           <v-col class="d-flex" cols="6">
             <v-select
+              v-model="items.menu"
+              :items="menuList"
+              item-text="menuName"
+              item-value="menuName"
               label="menu"
-              :items="menu"
-              item-text="menu"
-              item-value="id"
             ></v-select>
           </v-col>
           <v-col v-if="index !== 0" cols="2">
@@ -27,17 +28,38 @@
             </v-btn>
           </v-col>
         </v-row>
-        <v-row v-for="(item, itemIndex) in items" :key="itemIndex">
+        <v-row v-for="(item, itemIndex) in items.volume" :key="itemIndex">
           <v-col class="d-flex" cols="10">
             <p>・</p>
-            <v-select outlined label="kg" :items="weight" dense></v-select>
+            <v-select
+              outlined
+              v-model="item.weight"
+              :items="weight"
+              :value="weight"
+              label="kg"
+              dense
+            ></v-select>
             <p>×</p>
-            <v-select outlined label="rep" :items="repetition" dense></v-select>
+            <v-select
+              outlined
+              v-model="item.repetition"
+              :items="repetition"
+              value="repetition"
+              label="rep"
+              dense
+            ></v-select>
             <p>×</p>
-            <v-select outlined label="set" :items="set" dense></v-select>
+            <v-select
+              outlined
+              v-model="item.set"
+              :items="set"
+              value="set"
+              label="set"
+              dense
+            ></v-select>
           </v-col>
           <v-col
-            v-if="itemIndex == Object.keys(menuData[index]).length - 1"
+            v-if="itemIndex == Object.keys(menuData[index].volume).length - 1"
             class="d-flex"
             cols="2"
           >
@@ -80,15 +102,16 @@ export default {
   data() {
     return {
       menuData: [
-        [
-          {
-            menu: "",
-            target: "",
-            weight: "",
-            repetition: "",
-            set: "",
-          },
-        ],
+        {
+          menu: "",
+          volume: [
+            {
+              weight: "",
+              repetition: "",
+              set: "",
+            },
+          ],
+        },
       ],
       bodyTarget: [
         { id: 1, target: "胸", checked: false },
@@ -98,10 +121,10 @@ export default {
         { id: 5, target: "二頭", checked: false },
         { id: 6, target: "三頭", checked: false },
       ],
-      menu: [
-        { id: 1, menu: "ベンチプレス", target: "胸" },
-        { id: 2, menu: "スクワット", target: "脚" },
-        { id: 3, menu: "ベントオーバーロウ", target: "背中" },
+      menuList: [
+        { id: 1, menuName: "ベンチプレス" },
+        { id: 2, menuName: "スクワット" },
+        { id: 3, menuName: "ベントオーバーロウ" },
       ],
       weight: [40, 50, 60, 70, 80, 90, 100],
       repetition: Array.from(new Array(20)).map((v, i) => i + 1),
@@ -111,8 +134,7 @@ export default {
   methods: {
     addSetForm(index) {
       console.log("セット追加:" + index);
-      this.menuData[index].push({
-        menu: "",
+      this.menuData[index].volume.push({
         target: "",
         weight: "",
         repetition: "",
@@ -121,22 +143,24 @@ export default {
     },
     addMenuForm() {
       console.log("メニュー追加");
-      this.menuData.push([
-        {
-          menu: "",
-          target: "",
-          weight: "",
-          repetition: "",
-          set: "",
-        },
-      ]);
+      this.menuData.push({
+        menu: "",
+        volume: [
+          {
+            target: "",
+            weight: "",
+            repetition: "",
+            set: "",
+          },
+        ],
+      });
     },
     deleteSetForm(index, itemIndex) {
-      console.log("セット削除:" + Number(index+1) + "個目");
-      this.menuData[index].splice(itemIndex, 1);
+      console.log("セット削除:" + Number(index + 1) + "個目");
+      this.menuData[index].volume.splice(itemIndex, 1);
     },
     deleteMenuForm(index) {
-      console.log("メニュー削除" + Number(index+1) + "個目");
+      console.log("メニュー削除" + Number(index + 1) + "個目");
       this.menuData.splice(index, 1);
     },
     getBodyTarget() {
@@ -152,10 +176,14 @@ export default {
         });
       return target;
     },
+    getProgram() {
+      return this.menuData()
+    },
     submit() {
       console.log("--- 部位を取得 ---");
       console.log(this.getBodyTarget());
       console.log("--- プログラムを取得 ---");
+      console.log(this.getProgram());
     },
   },
 };
