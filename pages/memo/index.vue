@@ -92,7 +92,7 @@
     </div>
     <div class="text-center mt-7">
       <v-btn color="red" class="mr-5" dark>削除</v-btn>
-      <v-btn color="blue" class="mr-5" dark @click="submit">確定</v-btn>
+      <v-btn color="blue" class="mr-5" dark @click="confirmation">確定</v-btn>
     </div>
   </v-container>
 </template>
@@ -186,6 +186,18 @@ export default {
         return a.concat(b);
       });
       return programArray
+    },
+    confirmation() {
+      const validate = true;
+      if(validate) {
+        // 入力欄に問題がない時
+        // モーダルを表示
+
+      } else {
+        // 入力欄に問題がある時
+        // バリデーションメッセージを表示
+
+      }
     },
     submit() {
       console.log("--- 部位を取得 ---");
