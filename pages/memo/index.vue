@@ -2,17 +2,30 @@
   <v-container fluid>
     <v-form ref="form" v-model="valid">
       <div>
-        <p>部位</p>
+        <p
+          :class="
+            errors.checkbox
+              ? `theme--light v-label error--text`
+              : `theme--light v-label`
+          "
+          style="margin-bottom: 0.5rem"
+        >
+          部位
+        </p>
         <v-layout wrap>
           <v-flex xs4 v-for="(item, index) in bodyTarget" :key="index">
             <v-checkbox
               v-model="item.checked"
               :label="item.target"
+              :rules="[rules.check_least_1]"
+              hide-details
+              @change="changeCheckbox"
             ></v-checkbox>
           </v-flex>
         </v-layout>
+        <div class="v-messages error--text">{{ messages.checkbox }}</div>
       </div>
-      <div>
+      <div class="mt-4">
         <p>プログラム</p>
         デバック用:{{ menuData }}
         <div v-for="(items, index) in menuData" :key="index">
@@ -151,6 +164,19 @@ export default {
         required: (value) => {
           return !!value || "必ず選択してください";
         },
+        check_least_1: () => {
+          return (
+            this.bodyTarget.filter((item) => {
+              return item.checked;
+            }).length !== 0 || "1つは必須選択です。"
+          );
+        },
+      },
+      errors: {
+        checkbox: false,
+      },
+      messages: {
+        checkbox: null,
       },
     };
   },
@@ -211,6 +237,18 @@ export default {
           return a.concat(b);
         });
       return programArray;
+    },
+    changeCheckbox() {
+      this.errors.checkbox = false;
+      this.messages.checkbox = "";
+      if (
+        this.bodyTarget.filter((item) => {
+          return item.checked;
+        }).length === 0
+      ) {
+        this.errors.checkbox = true;
+        this.messages.checkbox = "1つは必須選択です。";
+      }
     },
     confirmation() {
       const validate = this.$refs.form.validate(); // ref="form"内のバリデーション結果をbooleanで返す
