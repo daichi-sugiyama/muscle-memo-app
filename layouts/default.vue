@@ -8,6 +8,7 @@
 export default {
   data () {
     return {}
-  }
+  },
+  middleware: 'loginCheck'
 }
 </script>
