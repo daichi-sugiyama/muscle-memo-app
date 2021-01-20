@@ -1,8 +1,8 @@
 import auth from '~/plugins/auth'
 import firebase from '~/plugins/firebase'
 
-export default () => {
-  firebase.auth().onAuthStateChanged(user => {
+export default async() => {
+  await firebase.auth().onAuthStateChanged(user => {
     if (user) {
       console.log('認証中')
     } else {

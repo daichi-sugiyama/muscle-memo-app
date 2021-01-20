@@ -79,10 +79,10 @@ export default {
   async mounted() {
     // firestoreを使うためのサンプルコード
     // 参考：https://www.wakuwakubank.com/posts/721-firebase-firestore-introduction/
-    firebase.auth().onAuthStateChanged(function (user) {console.log(user)}); // 認証中のユーザー
+    firebase.auth().onAuthStateChanged(function (user) {console.log(user.uid)}); // 認証中のユーザー
     const db = firebase.firestore()
     const userDoc = await db.collection('users').doc('9OpHBAsAoNKUhTr9daJx').get() // firestoreから通信して取得しているため（非同期なので）awaitで待つ
-    console.log(userDoc.get('name'))
+    console.log(userDoc.exists)
   },
 };
 </script>

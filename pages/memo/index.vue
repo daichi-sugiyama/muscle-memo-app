@@ -130,6 +130,7 @@
 </template>
 
 <script>
+import firebase from "~/plugins/firebase";
 export default {
   data() {
     return {
@@ -257,7 +258,19 @@ export default {
       console.log(validate);
       if (validate) {
         // 入力欄に問題がない時
-        // モーダルを表示
+        // データを保存
+
+        // programsコレクションに保存
+        this.getProgram().forEach((item) => {
+          const program = {
+            menu: item.menu,
+            weight: item.weight,
+            repetition: item.repetition,
+            set: item.set,
+          };
+          const db = firebase.firestore();
+          const memoDoc = db.collection("programs").doc().set(program);
+        });
       } else {
         // 入力欄に問題がある時
         // バリデーションメッセージを表示
