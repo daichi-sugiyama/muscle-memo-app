@@ -84,6 +84,8 @@
                 :items="set"
                 value="set"
                 label="set"
+                :rules="[rules.required]"
+                required
                 dense
               ></v-select>
             </v-col>
