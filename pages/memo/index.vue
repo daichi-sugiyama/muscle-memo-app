@@ -1,132 +1,144 @@
 <template>
-  <v-container fluid>
-    <v-form ref="form" v-model="valid">
-      <div>
-        <p
-          :class="
-            errors.checkbox
-              ? `theme--light v-label error--text`
-              : `theme--light v-label`
-          "
-          style="margin-bottom: 0.5rem"
-        >
-          部位
-        </p>
-        <v-layout wrap>
-          <v-flex xs4 v-for="(item, index) in bodyTarget" :key="index">
-            <v-checkbox
-              v-model="item.checked"
-              :label="item.target"
-              :rules="[rules.check_least_1]"
-              hide-details
-              @change="changeCheckbox"
-            ></v-checkbox>
-          </v-flex>
-        </v-layout>
-        <div class="v-messages error--text">{{ messages.checkbox }}</div>
-      </div>
-      <div class="mt-4">
-        <p>プログラム</p>
-        デバック用:{{ menuData }}
-        <div v-for="(items, index) in menuData" :key="index">
-          <v-row>
-            <v-col class="d-flex" cols="6">
-              <v-select
-                v-model="items.menu"
-                :items="menuList"
-                item-text="menuName"
-                item-value="menuName"
-                label="menu"
-                :rules="[rules.required]"
-                required
-              ></v-select>
-            </v-col>
-            <v-col v-if="index !== 0" cols="2">
-              <v-btn
-                fab
-                dark
-                x-small
-                color="pink"
-                @click="deleteMenuForm(index)"
-              >
-                <v-icon dark>mdi-minus</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-          <v-row v-for="(item, itemIndex) in items.volume" :key="itemIndex">
-            <v-col class="d-flex" cols="10">
-              <p>・</p>
-              <v-select
-                outlined
-                v-model="item.weight"
-                :items="weight"
-                :value="weight"
-                label="kg"
-                dense
-                :rules="[rules.required]"
-                required
-              ></v-select>
-              <p>×</p>
-              <v-select
-                outlined
-                v-model="item.repetition"
-                :items="repetition"
-                value="repetition"
-                label="rep"
-                :rules="[rules.required]"
-                required
-                dense
-              ></v-select>
-              <p>×</p>
-              <v-select
-                outlined
-                v-model="item.set"
-                :items="set"
-                value="set"
-                label="set"
-                :rules="[rules.required]"
-                required
-                dense
-              ></v-select>
-            </v-col>
-            <v-col
-              v-if="itemIndex == Object.keys(menuData[index].volume).length - 1"
-              class="d-flex"
-              cols="2"
-            >
-              <v-btn fab dark x-small color="indigo" @click="addSetForm(index)">
-                <v-icon dark>mdi-plus</v-icon>
-              </v-btn>
-            </v-col>
-            <v-col v-else cols="2">
-              <v-btn
-                fab
-                dark
-                x-small
-                color="pink"
-                @click="deleteSetForm(index, itemIndex)"
-              >
-                <v-icon dark>mdi-minus</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-          <v-row v-if="index == Object.keys(menuData).length - 1">
-            <v-col cols="12">
-              <div class="text-center">
-                <v-btn rounded color="primary" dark @click="addMenuForm">
-                  メニューを追加
-                </v-btn>
-              </div>
-            </v-col>
-          </v-row>
+  <v-card max-width="400" class="mx-auto">
+    <v-container fluid>
+      <v-form ref="form" v-model="valid">
+        <div>
+          <p
+            :class="
+              errors.checkbox
+                ? `theme--light v-label error--text`
+                : `theme--light v-label`
+            "
+            style="margin-bottom: 0.5rem"
+          >
+            部位
+          </p>
+          <v-layout wrap>
+            <v-flex xs4 v-for="(item, index) in bodyTarget" :key="index">
+              <v-checkbox
+                v-model="item.checked"
+                :label="item.target"
+                :rules="[rules.check_least_1]"
+                hide-details
+                @change="changeCheckbox"
+              ></v-checkbox>
+            </v-flex>
+          </v-layout>
+          <div class="v-messages error--text">{{ messages.checkbox }}</div>
         </div>
-      </div>
-      <div class="text-center mt-7">
-        <v-btn color="red" class="mr-5" dark>削除</v-btn>
-        <v-btn color="blue" class="mr-5" dark @click="confirmation">確定</v-btn>
-      </div>
-    </v-form>
-  </v-container>
+        <div class="mt-4">
+          <p>プログラム</p>
+          デバック用:{{ menuData }}
+          <div v-for="(items, index) in menuData" :key="index">
+            <v-row>
+              <v-col class="d-flex" cols="6">
+                <v-select
+                  v-model="items.menu"
+                  :items="menuList"
+                  item-text="menuName"
+                  item-value="menuName"
+                  label="menu"
+                  :rules="[rules.required]"
+                  required
+                ></v-select>
+              </v-col>
+              <v-col v-if="index !== 0" cols="2">
+                <v-btn
+                  fab
+                  dark
+                  x-small
+                  color="pink"
+                  @click="deleteMenuForm(index)"
+                >
+                  <v-icon dark>mdi-minus</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+            <v-row v-for="(item, itemIndex) in items.volume" :key="itemIndex">
+              <v-col class="d-flex" cols="10">
+                <p>・</p>
+                <v-select
+                  outlined
+                  v-model="item.weight"
+                  :items="weight"
+                  :value="weight"
+                  label="kg"
+                  dense
+                  :rules="[rules.required]"
+                  required
+                ></v-select>
+                <p>×</p>
+                <v-select
+                  outlined
+                  v-model="item.repetition"
+                  :items="repetition"
+                  value="repetition"
+                  label="rep"
+                  :rules="[rules.required]"
+                  required
+                  dense
+                ></v-select>
+                <p>×</p>
+                <v-select
+                  outlined
+                  v-model="item.set"
+                  :items="set"
+                  value="set"
+                  label="set"
+                  :rules="[rules.required]"
+                  required
+                  dense
+                ></v-select>
+              </v-col>
+              <v-col
+                v-if="
+                  itemIndex == Object.keys(menuData[index].volume).length - 1
+                "
+                class="d-flex"
+                cols="2"
+              >
+                <v-btn
+                  fab
+                  dark
+                  x-small
+                  color="indigo"
+                  @click="addSetForm(index)"
+                >
+                  <v-icon dark>mdi-plus</v-icon>
+                </v-btn>
+              </v-col>
+              <v-col v-else cols="2">
+                <v-btn
+                  fab
+                  dark
+                  x-small
+                  color="pink"
+                  @click="deleteSetForm(index, itemIndex)"
+                >
+                  <v-icon dark>mdi-minus</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+            <v-row v-if="index == Object.keys(menuData).length - 1">
+              <v-col cols="12">
+                <div class="text-center">
+                  <v-btn rounded color="primary" dark @click="addMenuForm">
+                    メニューを追加
+                  </v-btn>
+                </div>
+              </v-col>
+            </v-row>
+          </div>
+        </div>
+        <div class="text-center mt-7">
+          <v-btn color="red" class="mr-5" dark>削除</v-btn>
+          <v-btn color="blue" class="mr-5" dark @click="confirmation"
+            >確定</v-btn
+          >
+        </div>
+      </v-form>
+    </v-container>
+  </v-card>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="400" class="mx-auto">
+  <v-card v-if="isAuth()" max-width="400" class="mx-auto">
     <v-app-bar color="#BDBDBD">
       <nuxt-link tag="div" to="/memo">
         <v-btn color=""> RM </v-btn>
@@ -28,6 +28,9 @@
       </v-row>
     </v-container>
   </v-card>
+  <div v-else>
+    TODO：isAuthがfalseの時、ログイン画面を表示
+  </div>
 </template>
 
 <script>
@@ -76,13 +79,11 @@ export default {
       },
     ],
   }),
-  async mounted() {
-    // firestoreを使うためのサンプルコード
-    // 参考：https://www.wakuwakubank.com/posts/721-firebase-firestore-introduction/
-    firebase.auth().onAuthStateChanged(function (user) {console.log(user.uid)}); // 認証中のユーザー
-    const db = firebase.firestore()
-    const userDoc = await db.collection('users').doc('9OpHBAsAoNKUhTr9daJx').get() // firestoreから通信して取得しているため（非同期なので）awaitで待つ
-    console.log(userDoc.exists)
+  methods: {
+    isAuth() {
+      console.log("ログイン状態:" + this.$store.state.user.isAuth)
+      return this.$store.state.user.isAuth;
+    }
   },
 };
 </script>

@@ -1,13 +1,15 @@
-import auth from '~/plugins/auth'
-import firebase from '~/plugins/firebase'
-
-export default async() => {
-  await firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      console.log('認証中')
+export default function({ route, store }) {
+  if (store.state.user.isAuth) {
+    // Do nothing if authenticated...
+  } else {
+    if (route.path === '/') {
+      store.dispatch('user/checkAuth')
     } else {
-      console.log('未認証')
-      auth.login()
+      // @see https://www.yo1000.com/nuxt-spa-redirect/
+      window.location.href = '/'
+      return new Promise(resolve => {
+        // Wait for broswer to redirect...
+      })
     }
-  })
+  }
 }
