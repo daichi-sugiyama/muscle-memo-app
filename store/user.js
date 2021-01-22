@@ -3,6 +3,7 @@ import auth from '../plugins/auth'
 
 export const state = () => ({
   isAuth: false,
+  uid: '',
   displayName: '',
   email: '',
 })
@@ -10,6 +11,7 @@ export const state = () => ({
 export const mutations = {
   setSignInState(state, user) {
     state.isAuth = !!user
+    state.userId = user.uid
   }
 }
 

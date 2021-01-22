@@ -143,6 +143,7 @@
 
 <script>
 import firebase from "~/plugins/firebase";
+import db from "~/plugins/db";
 export default {
   data() {
     return {
@@ -267,26 +268,45 @@ export default {
     },
     confirmation() {
       const validate = this.$refs.form.validate(); // ref="form"内のバリデーション結果をbooleanで返す
-      console.log(validate);
       if (validate) {
         // 入力欄に問題がない時
         // データを保存
-
-        // programsコレクションに保存
-        this.getProgram().forEach((item) => {
-          const program = {
-            menu: item.menu,
-            weight: item.weight,
-            repetition: item.repetition,
-            set: item.set,
-          };
-          const db = firebase.firestore();
-          const memoDoc = db.collection("programs").doc().set(program);
-        });
+        console.log("バリデーション結果："+validate);
+        // 保存
+        this.saveMethod();
       } else {
         // 入力欄に問題がある時
         // バリデーションメッセージを表示
       }
+    },
+    async saveMethod() {
+      // TODO:storeに移動
+
+      // programsコレクションに保存
+
+      const target = this.getBodyTarget().join('・')
+      const memo = {
+        target: target,
+        userId: this.$store.state.user.userId,
+        createDate: firebase.firestore.FieldValue.serverTimestamp(),
+        // updateDate: ,
+      }
+      const memoRef = await db.collection("memo").add(memo)
+
+      this.getProgram().forEach((item) => {
+        // programsコレクションに保存
+        const program = {
+          menu: item.menu,
+          weight: item.weight,
+          repetition: item.repetition,
+          set: item.set,
+          userId: this.$store.state.user.userId,
+          memo: memoRef,
+          createDate: firebase.firestore.FieldValue.serverTimestamp(),
+          // updateDate: ,
+        };
+        db.collection("programs").add(program);
+      });
     },
     submit() {
       console.log("--- 部位を取得 ---");

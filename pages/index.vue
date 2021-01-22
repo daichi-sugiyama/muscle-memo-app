@@ -35,6 +35,7 @@
 
 <script>
 import firebase from "~/plugins/firebase";
+import db from "~/plugins/db";
 export default {
   data: () => ({
     items: [
@@ -80,8 +81,17 @@ export default {
     ],
   }),
   methods: {
-    isAuth() {
+    async isAuth() {
       console.log("ログイン状態:" + this.$store.state.user.isAuth)
+      console.log("ユーザーID:" + this.$store.state.user.userId)
+
+      //userIdからmemoを取得
+      const memoRef = db.collection("memo");
+      const querySnapshot = await memoRef.where("userId", "==", this.$store.state.user.userId).get()
+      querySnapshot.forEach((doc) => {
+        console.log(doc.data().target + doc.data().createData)
+      })
+  
       return this.$store.state.user.isAuth;
     }
   },

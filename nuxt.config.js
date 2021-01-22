@@ -25,7 +25,8 @@ export default {
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     {src: '@/plugins/firebase', mode: 'client'},
-    {src: '@/plugins/auth', mode: 'client'}
+    {src: '@/plugins/auth', mode: 'client'},
+    {src: '@/plugins/db', mode: 'client'}
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
