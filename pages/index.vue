@@ -18,7 +18,7 @@
             <div class="d-flex flex-no-wrap justify-space-between">
               <div>
                 <v-card-title
-                  class="headline"
+                  style="font-size: 20px"
                   v-text="item.title"
                 ></v-card-title>
               </div>
@@ -34,66 +34,21 @@
 </template>
 
 <script>
-import firebase from "~/plugins/firebase";
-import db from "~/plugins/db";
 export default {
-  data: () => ({
-    items: [
-      {
-        title: "【胸】2021/01/16",
-      },
-      {
-        title: "【胸】2021/01/16",
-      },
-      {
-        title: "【胸】2021/01/16",
-      },
-      {
-        title: "【胸】2021/01/16",
-      },
-      {
-        title: "【胸】2021/01/16",
-      },
-      {
-        title: "【胸】2021/01/16",
-      },
-      {
-        title: "【胸】2021/01/16",
-      },
-      {
-        title: "【胸】2021/01/16",
-      },
-      {
-        title: "【胸】2021/01/16",
-      },
-      {
-        title: "【胸】2021/01/16",
-      },
-      {
-        title: "【胸】2021/01/16",
-      },
-      {
-        title: "【胸】2021/01/16",
-      },
-      {
-        title: "【胸】2021/01/16",
-      },
-    ],
-  }),
+  data: () => ({}),
+  computed: {
+    items() {
+      return this.$store.state.memo.memo
+    }
+  },
   methods: {
     async isAuth() {
       console.log("ログイン状態:" + this.$store.state.user.isAuth)
       console.log("ユーザーID:" + this.$store.state.user.userId)
-
-      //userIdからmemoを取得
-      const memoRef = db.collection("memo");
-      const querySnapshot = await memoRef.where("userId", "==", this.$store.state.user.userId).get()
-      querySnapshot.forEach((doc) => {
-        console.log(doc.data().target + doc.data().createData)
-      })
-  
-      return this.$store.state.user.isAuth;
     }
   },
-};
+  mounted: function () {
+    this.$store.dispatch('memo/getMemoData', this.$store.state.user.userId)
+  }
+}
 </script>
