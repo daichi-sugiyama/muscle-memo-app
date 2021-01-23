@@ -28,7 +28,6 @@
         </div>
         <div class="mt-4">
           <p>プログラム</p>
-          デバック用:{{ menuData }}
           <div v-for="(items, index) in menuData" :key="index">
             <v-row>
               <v-col class="d-flex" cols="6">
@@ -281,9 +280,7 @@ export default {
     },
     async saveMethod() {
       // TODO:storeに移動
-
-      // programsコレクションに保存
-
+      // memoコレクションに保存
       const target = this.getBodyTarget().join('・')
       const memo = {
         target: target,
@@ -300,6 +297,8 @@ export default {
           weight: item.weight,
           repetition: item.repetition,
           set: item.set,
+          // 小数点第2位を四捨五入
+          rm: (Math.round((item.weight*item.repetition/40) + item.weight)*10/10),
           userId: this.$store.state.user.userId,
           memo: memoRef,
           createDate: firebase.firestore.FieldValue.serverTimestamp(),
@@ -307,13 +306,7 @@ export default {
         };
         db.collection("programs").add(program);
       });
-    },
-    submit() {
-      console.log("--- 部位を取得 ---");
-      console.log(this.getBodyTarget());
-      console.log("--- プログラムを取得 ---");
-      console.log(this.getProgram());
-    },
+    }
   },
 };
 </script>
