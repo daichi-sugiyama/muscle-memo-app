@@ -146,6 +146,8 @@ import db from "~/plugins/db";
 export default {
   data() {
     return {
+      // menuData: '',
+      // bodyTarget: '',
       menuList: "",
       weight: "",
       repetition: "",

@@ -14,16 +14,18 @@
     <v-container>
       <v-row dense>
         <v-col v-for="(item, i) in items" :key="i" cols="12">
-          <v-card class="ma-1" color="#F5F5F5">
-            <div class="d-flex flex-no-wrap justify-space-between">
-              <div>
-                <v-card-title
-                  style="font-size: 20px"
-                  v-text="item.title"
-                ></v-card-title>
+          <nuxt-link tag="div" :to="`/memo/edit?memoId=${item.memoId}`">
+            <v-card class="ma-1" color="#F5F5F5">
+              <div class="d-flex flex-no-wrap justify-space-between">
+                <div>
+                  <v-card-title
+                    style="font-size: 20px"
+                    v-text="item.title"
+                  ></v-card-title>
+                </div>
               </div>
-            </div>
-          </v-card>
+            </v-card>
+          </nuxt-link>
         </v-col>
       </v-row>
     </v-container>
@@ -38,7 +40,7 @@ export default {
   data: () => ({}),
   computed: {
     items() {
-      return this.$store.state.memo.memo
+      return this.$store.state.memos.memos
     }
   },
   methods: {
@@ -48,7 +50,7 @@ export default {
     }
   },
   mounted: function () {
-    this.$store.dispatch('memo/getMemoData', this.$store.state.user.userId)
+    this.$store.dispatch('memos/getMemosData', this.$store.state.user.userId)
   }
 }
 </script>
