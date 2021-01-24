@@ -279,8 +279,10 @@ export default {
       });
     },
   },
-  mounted: function () {
+  created: function () {
     this.$store.dispatch("memo/setEditFrom", this.$route.query.memoId);
+  },
+  mounted: function () {
     this.menuList = this.$store.state.memo.menuList;
     this.weight = this.$store.state.memo.weight;
     this.repetition = this.$store.state.memo.repetition;
