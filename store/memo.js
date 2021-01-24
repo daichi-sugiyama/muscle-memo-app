@@ -1,5 +1,4 @@
 import db from '~/plugins/db'
-import moment from "moment";
 
 const deepCopy = (value) => {
   return JSON.parse(JSON.stringify(value))
@@ -55,7 +54,7 @@ export const mutations = {
 }
 
 export const actions = {
-  addSetForm({commit, state}, index) {
+  addSetForm({ commit, state }, index) {
     console.log("セット追加");
     const menuData = deepCopy(state.menuData);
     menuData[index].volume.push({
@@ -66,7 +65,7 @@ export const actions = {
     });
     commit('setMenuDataState', menuData);
   },
-  addMenuForm({commit, state}) {
+  addMenuForm({ commit, state }) {
     console.log("メニュー追加");
     const menuData = deepCopy(state.menuData);
     menuData.push({
@@ -82,25 +81,56 @@ export const actions = {
     });
     commit('setMenuDataState', menuData);
   },
-  deleteSetForm({commit, state}, {index, itemIndex}) {
+  deleteSetForm({ commit, state }, { index, itemIndex }) {
     console.log("セット削除");
     const menuData = deepCopy(state.menuData);
     menuData[index].volume.splice(itemIndex, 1);
     commit('setMenuDataState', menuData);
   },
-  deleteMenuForm({commit, state}, index) {
+  deleteMenuForm({ commit, state }, index) {
     console.log("メニュー削除");
     const menuData = deepCopy(state.menuData);
     menuData.splice(index, 1);
     commit('setMenuDataState', menuData);
   },
-  setEditFrom({commit, state}, memoId) {
-    const querySnapshot = db.collection('memo').doc(memoId)
-    querySnapshot.get().then(function(doc) {
+  // 編集画面のデータをセット
+  setEditFrom({ commit, state }, memoId) {
+    // bodyTargetをセット
+    const memoRef = db.collection('memo').doc(memoId);
+    memoRef.get().then(function (doc) {
       if (doc.exists) {
-          console.log(doc.data());
-        }
+        const bodyTarget = deepCopy(state.bodyTarget);
+        const arrayBodyTarget = doc.data().target.split('・');
+        bodyTarget.map(item => {
+          if (arrayBodyTarget.indexOf(item.target) !== -1) {
+            item.checked = true
+          };
+        });
+        commit('setBodyTargetState', bodyTarget);
       }
-    )
+    })
+    // menuDataをセット
+    const programsRef = db.collection('programs');
+    programsRef.where("memoId", "==", memoId).get().then((querySnapshot) => {
+      if (!querySnapshot.empty) {
+        // 取得したデータを配列にpush
+        let menuArray = [];
+        querySnapshot.forEach((doc) => {
+          menuArray.push(doc.data())
+        });
+        // 配列を変形
+        const menuData = []
+        const menuList = deepCopy(state.menuList);
+        menuList.forEach((item) => {
+          const filterMenuData = menuArray.filter((menu) => {
+            return menu.menu == item.menuName
+          })
+          if (!filterMenuData.length == 0) {
+            menuData.push({menu: item.menuName, volume: filterMenuData})
+          }
+        })
+        commit('setMenuDataState', menuData);
+      }
+    });
   }
 }

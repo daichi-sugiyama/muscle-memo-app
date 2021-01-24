@@ -179,7 +179,7 @@ export default {
       this.$store.dispatch("memo/addMenuForm");
     },
     deleteSetForm(index, itemIndex) {
-      this.$store.dispatch("memo/deleteSetForm", {index, itemIndex});
+      this.$store.dispatch("memo/deleteSetForm", { index, itemIndex });
     },
     deleteMenuForm(index) {
       this.$store.dispatch("memo/deleteMenuForm", index);
@@ -260,7 +260,7 @@ export default {
               10) /
             10,
           userId: this.$store.state.user.userId,
-          memo: memoRef,
+          memoId: memoRef.id,
           createDate: firebase.firestore.FieldValue.serverTimestamp(),
           // updateDate: ,
         };

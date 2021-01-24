@@ -32,7 +32,6 @@ export const actions = {
       if (a.createData < b.createData) return 1;
       return 0;
     });
-    console.log(memosArray)
     commit('setMemosState', memosArray)
   }
 }
