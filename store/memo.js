@@ -94,4 +94,13 @@ export const actions = {
     menuData.splice(index, 1);
     commit('setMenuDataState', menuData);
   },
+  setEditFrom({commit, state}, memoId) {
+    const querySnapshot = db.collection('memo').doc(memoId)
+    querySnapshot.get().then(function(doc) {
+      if (doc.exists) {
+          console.log(doc.data());
+        }
+      }
+    )
+  }
 }

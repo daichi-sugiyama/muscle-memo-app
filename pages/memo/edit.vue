@@ -28,6 +28,7 @@
         </div>
         <div class="mt-4">
           <p>プログラム</p>
+          {{menuData}}
           <div v-for="(items, index) in menuData" :key="index">
             <v-row>
               <v-col class="d-flex" cols="6">
@@ -146,8 +147,6 @@ import db from "~/plugins/db";
 export default {
   data() {
     return {
-      // menuData: '',
-      // bodyTarget: '',
       menuList: "",
       weight: "",
       repetition: "",
@@ -271,6 +270,7 @@ export default {
     },
   },
   mounted: function () {
+    this.$store.dispatch("memo/setEditFrom", this.$route.query.memoId);
     this.menuList = this.$store.state.memo.menuList;
     this.weight = this.$store.state.memo.weight;
     this.repetition = this.$store.state.memo.repetition;
@@ -283,14 +283,6 @@ export default {
     bodyTarget() {
       return this.$store.getters["memo/bodyTarget"];
     },
-  },
-  watch: {
-    // menuData(val, old) {
-    //   console.log("watch", val);
-    // },
-    // bodyTarget(val, old) {
-    //   console.log("watch", val);
-    // },
-  },
+  }
 };
 </script>
