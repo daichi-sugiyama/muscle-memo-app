@@ -54,6 +54,33 @@ export const mutations = {
 }
 
 export const actions = {
+  changeCheckbox({ commit, state }, target) {
+    // チェックボックス変更処理
+    const bodyTarget = deepCopy(state.bodyTarget);
+    bodyTarget.map((item) => {
+      if (item.target == target) {
+        item.checked = !item.checked
+      }
+      return item
+    });
+    commit('setBodyTargetState', bodyTarget);
+  },
+  changeMenuSelect({ commit, state }, {event, index}) {
+    const menuData = deepCopy(state.menuData);
+    menuData[index].menu = event
+    commit('setMenuDataState', menuData);
+  },
+  changeMenuVolume({ commit, state }, {event, paramName, index, itemIndex}) {
+    const menuData = deepCopy(state.menuData);
+    if (paramName == "weight") {
+      menuData[index].volume[itemIndex].weight = event
+    } else if(paramName == "repetition") {
+      menuData[index].volume[itemIndex].repetition = event
+    } else if(paramName == "set") {
+      menuData[index].volume[itemIndex].set = event
+    }
+    commit('setMenuDataState', menuData);
+  },
   addSetForm({ commit, state }, index) {
     console.log("セット追加");
     const menuData = deepCopy(state.menuData);
@@ -99,7 +126,14 @@ export const actions = {
     const memoRef = db.collection('memo').doc(memoId);
     memoRef.get().then(function (doc) {
       if (doc.exists) {
-        const bodyTarget = deepCopy(state.bodyTarget);
+        const bodyTarget = [
+          { id: 1, target: "胸", checked: false },
+          { id: 2, target: "肩", checked: false },
+          { id: 3, target: "背中", checked: false },
+          { id: 4, target: "脚", checked: false },
+          { id: 5, target: "二頭", checked: false },
+          { id: 6, target: "三頭", checked: false },
+        ];
         const arrayBodyTarget = doc.data().target.split('・');
         bodyTarget.map(item => {
           if (arrayBodyTarget.indexOf(item.target) !== -1) {

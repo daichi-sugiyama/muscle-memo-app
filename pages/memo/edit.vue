@@ -16,11 +16,11 @@
           <v-layout wrap>
             <v-flex xs4 v-for="(item, index) in bodyTarget" :key="index">
               <v-checkbox
-                v-model="item.checked"
+                :input-value="item.checked"
                 :label="item.target"
                 :rules="[rules.check_least_1]"
                 hide-details
-                @change="changeCheckbox"
+                @change="changeCheckbox(item.target)"
               ></v-checkbox>
             </v-flex>
           </v-layout>
@@ -33,13 +33,14 @@
             <v-row>
               <v-col class="d-flex" cols="6">
                 <v-select
-                  v-model="items.menu"
+                  :value="items.menu"
                   :items="menuList"
                   item-text="menuName"
                   item-value="menuName"
                   label="menu"
                   :rules="[rules.required]"
                   required
+                  @change="changeMenuSelect($event, index)"
                 ></v-select>
               </v-col>
               <v-col v-if="index !== 0" cols="2">
@@ -59,35 +60,35 @@
                 <p>・</p>
                 <v-select
                   outlined
-                  v-model="item.weight"
+                  :value="item.weight"
                   :items="weight"
-                  :value="weight"
                   label="kg"
                   dense
                   :rules="[rules.required]"
                   required
+                  @change="changeMenuVolume($event, 'weight', index, itemIndex)"
                 ></v-select>
                 <p>×</p>
                 <v-select
                   outlined
-                  v-model="item.repetition"
+                  :value="item.repetition"
                   :items="repetition"
-                  value="repetition"
                   label="rep"
                   :rules="[rules.required]"
                   required
                   dense
+                  @change="changeMenuVolume($event, 'repetition', index, itemIndex)"
                 ></v-select>
                 <p>×</p>
                 <v-select
                   outlined
-                  v-model="item.set"
+                  :value="item.set"
                   :items="set"
-                  value="set"
                   label="set"
                   :rules="[rules.required]"
                   required
                   dense
+                  @change="changeMenuVolume($event, 'set', index, itemIndex)"
                 ></v-select>
               </v-col>
               <v-col
@@ -211,7 +212,10 @@ export default {
         });
       return programArray;
     },
-    changeCheckbox() {
+    changeCheckbox(bodyTarget) {
+      // チェックボックス更新処理
+      this.$store.dispatch("memo/changeCheckbox", bodyTarget);
+      // バリデーション処理
       this.errors.checkbox = false;
       this.messages.checkbox = "";
       if (
@@ -222,6 +226,12 @@ export default {
         this.errors.checkbox = true;
         this.messages.checkbox = "1つは必須選択です。";
       }
+    },
+    changeMenuSelect(event, index) {
+      this.$store.dispatch("memo/changeMenuSelect", {event, index});
+    },
+    changeMenuVolume(event, paramName, index, itemIndex) {
+      this.$store.dispatch("memo/changeMenuVolume", {event, paramName, index, itemIndex});
     },
     confirmation() {
       const validate = this.$refs.form.validate(); // ref="form"内のバリデーション結果をbooleanで返す
@@ -277,11 +287,13 @@ export default {
     this.set = this.$store.state.memo.set;
   },
   computed: {
-    menuData() {
-      return this.$store.getters["memo/menuData"];
+    menuData: {
+      get() {return this.$store.state.memo.menuData},
+      set(val) {return console.log(val)}
     },
-    bodyTarget() {
-      return this.$store.getters["memo/bodyTarget"];
+    bodyTarget: {
+      get() {return this.$store.state.memo.bodyTarget},
+      set(val) {return console.log(val)}
     },
   }
 };
