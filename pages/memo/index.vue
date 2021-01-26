@@ -281,8 +281,6 @@ export default {
   },
   created: function () {
     this.$store.dispatch("memo/initMemo");
-  },
-  mounted: function () {
     this.menuList = this.$store.state.memo.menuList;
     this.weight = this.$store.state.memo.weight;
     this.repetition = this.$store.state.memo.repetition;

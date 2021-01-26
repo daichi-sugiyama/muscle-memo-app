@@ -26,8 +26,8 @@ const initBodyTarget = [
 ];
 
 export const state = () => ({
-  menuData: deepCopy(initMenuData),
-  bodyTarget: deepCopy(initBodyTarget),
+  menuData: '',
+  bodyTarget: '',
   menuList: [
     { id: 1, menuName: "ベンチプレス" },
     { id: 2, menuName: "スクワット" },
