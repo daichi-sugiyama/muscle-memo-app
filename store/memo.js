@@ -150,7 +150,9 @@ export const actions = {
         // 取得したデータを配列にpush
         let menuArray = [];
         querySnapshot.forEach((doc) => {
-          menuArray.push(doc.data())
+          let data = doc.data()
+          data.programId = doc.id
+          menuArray.push(data)
         });
         // 配列を変形
         const menuData = []

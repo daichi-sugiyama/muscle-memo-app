@@ -152,6 +152,7 @@ export default {
       weight: "",
       repetition: "",
       set: "",
+      memoId: this.$route.query.memoId,
       valid: true,
       rules: {
         required: (value) => {
@@ -239,27 +240,24 @@ export default {
         // 入力欄に問題がない時
         // データを保存
         console.log("バリデーション結果：" + validate);
-        // 保存
-        this.saveMethod();
-      } else {
-        // 入力欄に問題がある時
-        // バリデーションメッセージを表示
+        // 更新
+        this.editMethod();
+        // ホーム画面に戻る
+        this.$router.push('/')
       }
     },
-    async saveMethod() {
+    async editMethod() {
       // TODO:storeに移動
-      // memoコレクションに保存
+      // memoコレクションに更新
       const target = this.getBodyTarget().join("・");
       const memo = {
         target: target,
-        userId: this.$store.state.user.userId,
-        createDate: firebase.firestore.FieldValue.serverTimestamp(),
-        // updateDate: ,
+        updateDate: firebase.firestore.FieldValue.serverTimestamp(),
       };
-      const memoRef = await db.collection("memo").add(memo);
+      const memoRef = await db.collection("memo").doc(this.$route.query.memoId).update(memo);
 
       this.getProgram().forEach((item) => {
-        // programsコレクションに保存
+        // programsコレクションに更新
         const program = {
           menu: item.menu,
           weight: item.weight,
@@ -271,11 +269,17 @@ export default {
               10) /
             10,
           userId: this.$store.state.user.userId,
-          memo: memoRef,
-          createDate: firebase.firestore.FieldValue.serverTimestamp(),
-          // updateDate: ,
         };
-        db.collection("programs").add(program);
+        if(!!item.programId) {
+          // programIdが存在する場合
+          program.updateDate = firebase.firestore.FieldValue.serverTimestamp(),
+          db.collection("programs").doc(item.programId).update(program);
+        } else {
+          // programIdが存在しない場合
+          program.createDate = firebase.firestore.FieldValue.serverTimestamp()
+          program.memoId = this.memoId,
+          db.collection("programs").add(program);
+        }
       });
     },
   },

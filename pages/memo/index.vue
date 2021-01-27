@@ -241,9 +241,8 @@ export default {
         console.log("バリデーション結果：" + validate);
         // 保存
         this.saveMethod();
-      } else {
-        // 入力欄に問題がある時
-        // バリデーションメッセージを表示
+        // ホーム画面に戻る
+        this.$router.push('/')
       }
     },
     async saveMethod() {
@@ -254,7 +253,6 @@ export default {
         target: target,
         userId: this.$store.state.user.userId,
         createDate: firebase.firestore.FieldValue.serverTimestamp(),
-        // updateDate: ,
       };
       const memoRef = await db.collection("memo").add(memo);
 
@@ -271,9 +269,8 @@ export default {
               10) /
             10,
           userId: this.$store.state.user.userId,
-          memo: memoRef,
+          memoId: memoRef.id,
           createDate: firebase.firestore.FieldValue.serverTimestamp(),
-          // updateDate: ,
         };
         db.collection("programs").add(program);
       });
