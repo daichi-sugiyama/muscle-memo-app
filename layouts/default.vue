@@ -1,14 +1,20 @@
 <template>
-  <v-app dark>
+  <v-app v-if="isAuth">
     <nuxt />
   </v-app>
+  <div v-else>ログイン画面に遷移します</div>
 </template>
 
 <script>
 export default {
-  data () {
-    return {}
+  data() {
+    return {};
   },
-  middleware: 'loginCheck'
-}
+  middleware: "loginCheck",
+  computed: {
+    isAuth: {
+      get() {return this.$store.state.user.isAuth}
+    }
+  }
+};
 </script>

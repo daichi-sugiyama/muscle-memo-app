@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="isAuth()" max-width="400" class="mx-auto">
+  <v-card max-width="400" class="mx-auto">
     <v-app-bar color="#BDBDBD">
       <nuxt-link tag="div" to="/memo">
         <v-btn color=""> RM </v-btn>
@@ -30,9 +30,6 @@
       </v-row>
     </v-container>
   </v-card>
-  <div v-else>
-    TODO：isAuthがfalseの時、ログイン画面を表示
-  </div>
 </template>
 
 <script>
