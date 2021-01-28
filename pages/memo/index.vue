@@ -268,14 +268,14 @@ export default {
         itemIndex,
       });
     },
-    confirmation() {
+    async confirmation() {
       const validate = this.$refs.form.validate(); // ref="form"内のバリデーション結果をbooleanで返す
       if (validate) {
         // 入力欄に問題がない時
         // データを保存
         console.log("バリデーション結果：" + validate);
         // 保存
-        this.saveMethod();
+        await this.saveMethod();
         // ホーム画面に戻る
         this.$router.push("/");
       }
@@ -291,7 +291,7 @@ export default {
       };
       const memoRef = await db.collection("memo").add(memo);
 
-      this.getProgram().forEach((item) => {
+      this.getProgram().forEach(async (item) => {
         // programsコレクションに保存
         const program = {
           menu: item.menu,
@@ -307,7 +307,7 @@ export default {
           memoId: memoRef.id,
           createDate: firebase.firestore.FieldValue.serverTimestamp(),
         };
-        db.collection("programs").add(program);
+        await db.collection("programs").add(program);
       });
     },
   },

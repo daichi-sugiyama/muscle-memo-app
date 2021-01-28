@@ -269,14 +269,14 @@ export default {
         itemIndex,
       });
     },
-    confirmation() {
+    async confirmation() {
       const validate = this.$refs.form.validate(); // ref="form"内のバリデーション結果をbooleanで返す
       if (validate) {
         // 入力欄に問題がない時
         // データを保存
         console.log("バリデーション結果：" + validate);
         // 更新
-        this.editMethod();
+        await this.editMethod();
         // ホーム画面に戻る
         this.$router.push("/");
       }
@@ -295,7 +295,7 @@ export default {
         .update(memo);
 
       let programIdArray = JSON.parse(JSON.stringify(this.programIdArray));
-      this.getProgram().forEach((item) => {
+      this.getProgram().forEach(async (item) => {
         // programsコレクションに更新
         const program = {
           menu: item.menu,
@@ -315,18 +315,18 @@ export default {
             return id != item.programId;
           });
           program.updateDate = firebase.firestore.FieldValue.serverTimestamp();
-          db.collection("programs").doc(item.programId).update(program);
+          await db.collection("programs").doc(item.programId).update(program);
         } else {
           // programIdが存在しない場合、追加
           program.createDate = firebase.firestore.FieldValue.serverTimestamp();
           program.memoId = this.memoId;
-          db.collection("programs").add(program);
+          await db.collection("programs").add(program);
         }
       });
       // program削除処理
       if (programIdArray.length) {
-        programIdArray.forEach((id) => {
-          db.collection("programs").doc(id).delete();
+        programIdArray.forEach(async (id) => {
+          await db.collection("programs").doc(id).delete();
         });
       }
     },
