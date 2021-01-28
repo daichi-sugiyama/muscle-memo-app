@@ -28,7 +28,6 @@
         </div>
         <div class="mt-4">
           <p>プログラム</p>
-          {{menuData}}
           <div v-for="(items, index) in menuData" :key="index">
             <v-row>
               <v-col class="d-flex" cols="6">

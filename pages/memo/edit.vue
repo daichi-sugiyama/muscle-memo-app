@@ -28,7 +28,6 @@
         </div>
         <div class="mt-4">
           <p>プログラム</p>
-          {{menuData}}
           <div v-for="(items, index) in menuData" :key="index">
             <v-row>
               <v-col class="d-flex" cols="6">
@@ -77,7 +76,9 @@
                   :rules="[rules.required]"
                   required
                   dense
-                  @change="changeMenuVolume($event, 'repetition', index, itemIndex)"
+                  @change="
+                    changeMenuVolume($event, 'repetition', index, itemIndex)
+                  "
                 ></v-select>
                 <p>×</p>
                 <v-select
@@ -256,6 +257,8 @@ export default {
       };
       const memoRef = await db.collection("memo").doc(this.$route.query.memoId).update(memo);
 
+
+      let programIdArray = JSON.parse(JSON.stringify(this.programIdArray))
       this.getProgram().forEach((item) => {
         // programsコレクションに更新
         const program = {
@@ -271,16 +274,25 @@ export default {
           userId: this.$store.state.user.userId,
         };
         if(!!item.programId) {
-          // programIdが存在する場合
-          program.updateDate = firebase.firestore.FieldValue.serverTimestamp(),
+          // programIdが存在する場合、更新
+          programIdArray = programIdArray.filter((id) => {
+            return id != item.programId;
+          });
+          program.updateDate = firebase.firestore.FieldValue.serverTimestamp();
           db.collection("programs").doc(item.programId).update(program);
         } else {
-          // programIdが存在しない場合
+          // programIdが存在しない場合、追加
           program.createDate = firebase.firestore.FieldValue.serverTimestamp()
-          program.memoId = this.memoId,
+          program.memoId = this.memoId;
           db.collection("programs").add(program);
         }
       });
+      // program削除処理
+      if (programIdArray.length) {
+        programIdArray.forEach((id) => {
+          db.collection("programs").doc(id).delete();
+        })
+      }
     },
   },
   created: function () {
@@ -299,6 +311,10 @@ export default {
       get() {return this.$store.state.memo.bodyTarget},
       set(val) {return console.log(val)}
     },
+    programIdArray: {
+      get() {return this.$store.state.memo.programIdArray},
+      set(val) {return console.log(val)}
+    }
   }
 };
 </script>

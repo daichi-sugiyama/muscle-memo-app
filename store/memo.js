@@ -28,6 +28,7 @@ const initBodyTarget = [
 export const state = () => ({
   menuData: '',
   bodyTarget: '',
+  programIdArray: '',
   menuList: [
     { id: 1, menuName: "ベンチプレス" },
     { id: 2, menuName: "スクワット" },
@@ -53,6 +54,9 @@ export const mutations = {
   },
   setBodyTargetState(state, bodyTarget) {
     state.bodyTarget = bodyTarget
+  },
+  setProgramIdArrayState(state, programIdArray) {
+    state.programIdArray = programIdArray
   }
 }
 
@@ -166,6 +170,14 @@ export const actions = {
           }
         })
         commit('setMenuDataState', menuData);
+
+        const programIdArray = [];
+        menuData.forEach((items) => {
+          items.volume.forEach((item) => {
+            programIdArray.push(item.programId)
+          })
+        })
+        commit('setProgramIdArrayState', programIdArray);
       }
     });
   }
