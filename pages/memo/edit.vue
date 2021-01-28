@@ -133,7 +133,31 @@
           </div>
         </div>
         <div class="text-center mt-7">
-          <v-btn color="red" class="mr-5" dark>削除</v-btn>
+          <v-dialog v-model="dialog" width="500">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="red" dark v-bind="attrs" v-on="on"> 削除 </v-btn>
+            </template>
+
+            <v-card>
+              <v-card-title class="headline grey lighten-2">
+                削除しても良いですか？
+              </v-card-title>
+
+              <v-card-text class="mt-3">
+                削除したものはもとには戻せません。
+              </v-card-text>
+
+              <v-divider></v-divider>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="primary" text @click="dialog = false">
+                  いいえ
+                </v-btn>
+                <v-btn color="primary" text @click="deleteMemo"> はい </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
           <v-btn color="blue" class="mr-5" dark @click="confirmation"
             >確定</v-btn
           >
@@ -173,6 +197,7 @@ export default {
       messages: {
         checkbox: null,
       },
+      dialog: false,
     };
   },
   methods: {
@@ -183,10 +208,14 @@ export default {
       this.$store.dispatch("memo/addMenuForm");
     },
     deleteSetForm(index, itemIndex) {
-      this.$store.dispatch("memo/deleteSetForm", {index, itemIndex});
+      this.$store.dispatch("memo/deleteSetForm", { index, itemIndex });
     },
     deleteMenuForm(index) {
       this.$store.dispatch("memo/deleteMenuForm", index);
+    },
+    deleteMemo() {
+      // ホーム画面に戻る
+      this.$router.push("/");
     },
     getBodyTarget() {
       const checkedFilter = this.bodyTarget.filter((item) => {
@@ -230,10 +259,15 @@ export default {
       }
     },
     changeMenuSelect(event, index) {
-      this.$store.dispatch("memo/changeMenuSelect", {event, index});
+      this.$store.dispatch("memo/changeMenuSelect", { event, index });
     },
     changeMenuVolume(event, paramName, index, itemIndex) {
-      this.$store.dispatch("memo/changeMenuVolume", {event, paramName, index, itemIndex});
+      this.$store.dispatch("memo/changeMenuVolume", {
+        event,
+        paramName,
+        index,
+        itemIndex,
+      });
     },
     confirmation() {
       const validate = this.$refs.form.validate(); // ref="form"内のバリデーション結果をbooleanで返す
@@ -244,7 +278,7 @@ export default {
         // 更新
         this.editMethod();
         // ホーム画面に戻る
-        this.$router.push('/')
+        this.$router.push("/");
       }
     },
     async editMethod() {
@@ -255,10 +289,12 @@ export default {
         target: target,
         updateDate: firebase.firestore.FieldValue.serverTimestamp(),
       };
-      const memoRef = await db.collection("memo").doc(this.$route.query.memoId).update(memo);
+      const memoRef = await db
+        .collection("memo")
+        .doc(this.$route.query.memoId)
+        .update(memo);
 
-
-      let programIdArray = JSON.parse(JSON.stringify(this.programIdArray))
+      let programIdArray = JSON.parse(JSON.stringify(this.programIdArray));
       this.getProgram().forEach((item) => {
         // programsコレクションに更新
         const program = {
@@ -273,7 +309,7 @@ export default {
             10,
           userId: this.$store.state.user.userId,
         };
-        if(!!item.programId) {
+        if (!!item.programId) {
           // programIdが存在する場合、更新
           programIdArray = programIdArray.filter((id) => {
             return id != item.programId;
@@ -282,7 +318,7 @@ export default {
           db.collection("programs").doc(item.programId).update(program);
         } else {
           // programIdが存在しない場合、追加
-          program.createDate = firebase.firestore.FieldValue.serverTimestamp()
+          program.createDate = firebase.firestore.FieldValue.serverTimestamp();
           program.memoId = this.memoId;
           db.collection("programs").add(program);
         }
@@ -291,7 +327,7 @@ export default {
       if (programIdArray.length) {
         programIdArray.forEach((id) => {
           db.collection("programs").doc(id).delete();
-        })
+        });
       }
     },
   },
@@ -304,17 +340,29 @@ export default {
   },
   computed: {
     menuData: {
-      get() {return this.$store.state.memo.menuData},
-      set(val) {return console.log(val)}
+      get() {
+        return this.$store.state.memo.menuData;
+      },
+      set(val) {
+        return console.log(val);
+      },
     },
     bodyTarget: {
-      get() {return this.$store.state.memo.bodyTarget},
-      set(val) {return console.log(val)}
+      get() {
+        return this.$store.state.memo.bodyTarget;
+      },
+      set(val) {
+        return console.log(val);
+      },
     },
     programIdArray: {
-      get() {return this.$store.state.memo.programIdArray},
-      set(val) {return console.log(val)}
-    }
-  }
+      get() {
+        return this.$store.state.memo.programIdArray;
+      },
+      set(val) {
+        return console.log(val);
+      },
+    },
+  },
 };
 </script>
