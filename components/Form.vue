@@ -285,7 +285,6 @@ export default {
       }
     },
     async saveMethod() {
-      // TODO:storeに移動
       // memoコレクションに保存
       const target = this.getBodyTarget().join("・");
       const memo = {
@@ -315,7 +314,6 @@ export default {
       });
     },
     async editMethod() {
-      // TODO:storeに移動
       // memoコレクションに更新
       const target = this.getBodyTarget().join("・");
       const memo = {
