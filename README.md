@@ -3,6 +3,9 @@
 ## Build Setup
 
 ```bash
+# deploy firebase hosting
+$ firebase deploy
+
 # install dependencies
 $ yarn install
 
