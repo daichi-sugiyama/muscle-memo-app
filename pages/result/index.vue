@@ -4,18 +4,18 @@
     <div v-for="(items, index) in programsData" :key="index">
       <p>---------------------------</p>
       <p>{{ items.menuName }}</p>
-      <div v-for="(item, index) in items.programs" :key="index">
-        <p>{{ item.createDate }}</p>
-      </div>
+      <Chart :programs="items.programs"/>
     </div>
   </div>
 </template>
 
 <script>
-import { Bar } from "vue-chartjs";
+import Chart from "~/components/Chart.vue"
 
 export default {
-  extends: Bar,
+  components: {
+    Chart
+  },
   computed: {
     programsData() {
       return this.$store.state.result.programsData
