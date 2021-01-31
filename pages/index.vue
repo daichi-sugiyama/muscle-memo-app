@@ -1,7 +1,7 @@
 <template>
   <v-card max-width="400" class="mx-auto">
     <v-app-bar color="#BDBDBD">
-      <nuxt-link tag="div" to="/memo">
+      <nuxt-link tag="div" to="/result">
         <v-btn color=""> RM </v-btn>
       </nuxt-link>
       <v-spacer></v-spacer>

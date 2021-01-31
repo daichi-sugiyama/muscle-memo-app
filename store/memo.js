@@ -1,4 +1,5 @@
 import db from '~/plugins/db'
+import { menuNameList, weightList, repetitionList, setList } from '~/static/menuData'
 
 const deepCopy = (value) => {
   return JSON.parse(JSON.stringify(value))
@@ -29,14 +30,10 @@ export const state = () => ({
   menuData: '',
   bodyTarget: '',
   programIdArray: '',
-  menuList: [
-    { id: 1, menuName: "ベンチプレス" },
-    { id: 2, menuName: "スクワット" },
-    { id: 3, menuName: "ベントオーバーロウ" },
-  ],
-  weight: [40, 50, 60, 70, 80, 90, 100],
-  repetition: Array.from(new Array(20)).map((v, i) => i + 1),
-  set: Array.from(new Array(10)).map((v, i) => i + 1),
+  menuList: menuNameList,
+  weight: weightList,
+  repetition: repetitionList,
+  set: setList,
 })
 
 export const getters = {

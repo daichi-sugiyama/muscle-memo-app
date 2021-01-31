@@ -1,5 +1,6 @@
 import db from '~/plugins/db'
 import moment from "moment";
+import { sortDate } from "~/utils/sortDate.js"
 
 export const state = () => ({
   memos: ''
@@ -21,17 +22,13 @@ export const actions = {
         const memos = {
           title: '【' + doc.data().target + '】' + moment(doc.data().createDate.seconds * 1000).format('YYYY/MM/DD'),
           memoId: doc.id,
-          createData: moment(doc.data().createDate.seconds * 1000).format('YYYY/MM/DD'),
+          createDate: moment(doc.data().createDate.seconds * 1000).format('YYYY/MM/DD'),
         }
         memosArray.push(memos)
       }
     })
     // 日付順に並び替え
-    memosArray.sort(function (a, b) {
-      if (a.createData > b.createData) return -1;
-      if (a.createData < b.createData) return 1;
-      return 0;
-    });
+    memosArray = sortDate(memosArray)
     commit('setMemosState', memosArray)
   }
 }
