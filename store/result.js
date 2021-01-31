@@ -1,6 +1,6 @@
 import db from '~/plugins/db'
 import moment from "moment";
-import { sortDate } from "~/utils/sortDate.js"
+import { decsDate } from "~/utils/sortDate.js"
 import { menuNameList } from '~/static/menuData'
 
 export const state = () => ({
@@ -36,8 +36,9 @@ export const actions = {
         });
       });
     programsArray.map((array) => {
-      array.programs = sortDate(array.programs)
+      array.programs = decsDate(array.programs)
     })
+    console.log(programsArray)
     commit('setProgramsDataState', programsArray)
   },
 }
