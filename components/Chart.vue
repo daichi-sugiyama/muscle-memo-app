@@ -5,20 +5,20 @@ export default {
   data() {
     return {
       createDate: [],
-      rmData: []
-    }
+      rmData: [],
+    };
   },
   props: ["programs"],
   methods: {
     setData() {
       this.programs.forEach((program) => {
-        this.createDate.push(program.createDate)
-        this.rmData.push(program.rm)
-      })
-    }
+        this.createDate.push(program.createDate);
+        this.rmData.push(program.rm);
+      });
+    },
   },
   mounted() {
-    this.setData()
+    this.setData();
     this.renderChart(
       {
         labels: this.createDate,
@@ -27,10 +27,19 @@ export default {
             label: "Data One",
             backgroundColor: "#f87979",
             data: this.rmData,
+            lineTension: 0,
           },
         ],
       },
-      { responsive: true, maintainAspectRatio: false }
+      {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          onClick: function () {
+            return false;
+          },
+        },
+      }
     );
   },
 };
