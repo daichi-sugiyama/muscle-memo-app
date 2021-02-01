@@ -26,7 +26,7 @@ export const actions = {
       .then((querySnapshot) => {
         querySnapshot.forEach((query) => {
           let data = query.data();
-          data.createDate = moment(data.createDate.seconds * 1000).format('YYYY/MM/DD');
+          data.createDate = moment(data.createDate.seconds * 1000).format('YYYY/MM/DD HH:mm:ssZ');
           // 種目ごとに配列にデータを追加
           programsArray.map((value) => {
             if (value.menuName == data.menu) {

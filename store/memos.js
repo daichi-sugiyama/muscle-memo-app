@@ -22,7 +22,7 @@ export const actions = {
         const memos = {
           title: '【' + doc.data().target + '】' + moment(doc.data().createDate.seconds * 1000).format('YYYY/MM/DD'),
           memoId: doc.id,
-          createDate: moment(doc.data().createDate.seconds * 1000).format('YYYY/MM/DD'),
+          createDate: moment(doc.data().createDate.seconds * 1000).format('YYYY/MM/DD HH:mm:ssZ'),
         }
         memosArray.push(memos)
       }

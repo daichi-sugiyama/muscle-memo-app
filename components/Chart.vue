@@ -1,5 +1,6 @@
 <script>
 import { Line } from "vue-chartjs";
+import moment from "moment";
 export default {
   extends: Line,
   data() {
@@ -12,7 +13,7 @@ export default {
   methods: {
     setData() {
       this.programs.forEach((program) => {
-        this.createDate.push(program.createDate);
+        this.createDate.push(moment(program.createDate).format("MM/DD"));
         this.rmData.push(program.rm);
       });
     },
