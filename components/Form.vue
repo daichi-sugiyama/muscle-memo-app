@@ -135,16 +135,16 @@
         <div class="text-center mt-7">
           <v-dialog v-model="dialog" width="500">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="red" dark v-bind="attrs" v-on="on"> 削除 </v-btn>
+              <v-btn color="red" dark v-bind="attrs" v-on="on"> 戻る </v-btn>
             </template>
 
             <v-card>
               <v-card-title class="headline grey lighten-2">
-                削除しても良いですか？
+                ホーム画面に戻っても良いですか？
               </v-card-title>
 
               <v-card-text class="mt-3">
-                削除したものはもとには戻せません。
+                戻ったものは保存されません。
               </v-card-text>
 
               <v-divider></v-divider>

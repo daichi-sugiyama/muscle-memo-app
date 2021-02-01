@@ -38,7 +38,6 @@ export const actions = {
     programsArray.map((array) => {
       array.programs = decsDate(array.programs)
     })
-    console.log(programsArray)
     commit('setProgramsDataState', programsArray)
   },
 }
