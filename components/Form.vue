@@ -170,6 +170,17 @@
 import firebase from "~/plugins/firebase";
 import db from "~/plugins/db";
 export default {
+  props: {
+    menuData: {
+      required: true
+    },
+    bodyTarget: {
+      required: true
+    },
+    programIdArray: {
+      required: false
+    },
+  },
   data() {
     return {
       menuList: "",
@@ -367,32 +378,6 @@ export default {
     this.weight = this.$store.state.memo.weight;
     this.repetition = this.$store.state.memo.repetition;
     this.set = this.$store.state.memo.set;
-  },
-  computed: {
-    menuData: {
-      get() {
-        return this.$store.state.memo.menuData;
-      },
-      set(val) {
-        return console.log(val);
-      },
-    },
-    bodyTarget: {
-      get() {
-        return this.$store.state.memo.bodyTarget;
-      },
-      set(val) {
-        return console.log(val);
-      },
-    },
-    programIdArray: {
-      get() {
-        return this.$store.state.memo.programIdArray;
-      },
-      set(val) {
-        return console.log(val);
-      },
-    },
-  },
+  }
 };
 </script>
