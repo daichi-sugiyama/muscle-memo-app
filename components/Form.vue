@@ -166,6 +166,7 @@
 import firebase from "~/plugins/firebase";
 import db from "~/plugins/db";
 import { menuNameList, weightList, repetitionList, setList } from '~/static/menuData'
+import { deepCopy } from '~/utils/deepCopy'
 export default {
   data() {
     return {
@@ -227,7 +228,7 @@ export default {
       return target;
     },
     getProgram() {
-      const programArray = this.menuData
+      const programArray = deepCopy(this.menuData)
         .map((item) => {
           return item.volume.map((v) => {
             v.menu = item.menu;

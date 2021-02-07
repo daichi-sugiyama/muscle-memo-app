@@ -1,9 +1,6 @@
 import db from '~/plugins/db'
 import { menuNameList } from '~/static/menuData'
-
-const deepCopy = (value) => {
-  return JSON.parse(JSON.stringify(value))
-}
+import { deepCopy } from '~/utils/deepCopy'
 
 const initMenuData = [
   {
