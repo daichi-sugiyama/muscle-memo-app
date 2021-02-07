@@ -1,4 +1,5 @@
 # muscle-memo
+ApplicationURL：https://muscle-memo-app.web.app/
 
 ## Firebase Setup
 ホームディレクトリ配下に`.env`ファイルを作成
