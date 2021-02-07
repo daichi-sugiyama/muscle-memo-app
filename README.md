@@ -5,12 +5,14 @@ ApplicationURL：https://muscle-memo-app.web.app/
 ホームディレクトリ配下に`.env`ファイルを作成
 ```bash
 {
-  "apiKey": "<API_KEY>",
-  "authDomain": "<PROJECT_ID>.firebaseapp.com",
-  "databaseURL": "https://<DATABASE_NAME>.firebaseio.com",
-  "projectId": "<PROJECT_ID>",
-  "storageBucket": "<BUCKET>.appspot.com",
-  "messagingSenderId": "<SENDER_ID>"
+  "FB_API_KEY": "<API_KEY>",
+  "FB_AUTH_DOMAIN": "<PROJECT_ID>.firebaseapp.com",
+  "FB_DATABASE_URL": "https://<DATABASE_NAME>.firebaseio.com",
+  "FB_PROJECTID": "<PROJECT_ID>",
+  "FB_STORAGE_BUCKET": "<BUCKET>.appspot.com",
+  "FB_MESSAGING_SENDER_ID": "<SENDER_ID>"
+  "FB_APP_ID": "<APP_ID>"
+  "FB_MEASUREMENT_ID": "<MEASUREMENT_ID>"
 }
 ```
 参考：https://qiita.com/ririli/items/d0d3a6ae78c1b6e827fc
