@@ -137,18 +137,14 @@
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="red" dark v-bind="attrs" v-on="on"> 戻る </v-btn>
             </template>
-
             <v-card>
               <v-card-title class="headline grey lighten-2">
                 ホーム画面に戻っても良いですか？
               </v-card-title>
-
               <v-card-text class="mt-3">
                 戻ったものは保存されません。
               </v-card-text>
-
               <v-divider></v-divider>
-
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" text @click="dialog = false">
@@ -169,13 +165,14 @@
 <script>
 import firebase from "~/plugins/firebase";
 import db from "~/plugins/db";
+import { menuNameList, weightList, repetitionList, setList } from '~/static/menuData'
 export default {
   data() {
     return {
-      menuList: "",
-      weight: "",
-      repetition: "",
-      set: "",
+      menuList: menuNameList,
+      weight: weightList,
+      repetition: repetitionList,
+      set: setList,
       memoId: this.$route.query.memoId,
       valid: true,
       rules: {
@@ -293,7 +290,6 @@ export default {
         createDate: firebase.firestore.FieldValue.serverTimestamp(),
       };
       const memoRef = await db.collection("memo").add(memo);
-
       this.getProgram().forEach(async (item) => {
         // programsコレクションに保存
         const program = {
@@ -361,12 +357,6 @@ export default {
         });
       }
     },
-  },
-  created: function () {
-    this.menuList = this.$store.state.memo.menuList;
-    this.weight = this.$store.state.memo.weight;
-    this.repetition = this.$store.state.memo.repetition;
-    this.set = this.$store.state.memo.set;
   },
   computed: {
     menuData: {

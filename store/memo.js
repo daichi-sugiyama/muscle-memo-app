@@ -1,5 +1,5 @@
 import db from '~/plugins/db'
-import { menuNameList, weightList, repetitionList, setList } from '~/static/menuData'
+import { menuNameList } from '~/static/menuData'
 
 const deepCopy = (value) => {
   return JSON.parse(JSON.stringify(value))
@@ -30,10 +30,6 @@ export const state = () => ({
   menuData: '',
   bodyTarget: '',
   programIdArray: '',
-  menuList: menuNameList,
-  weight: weightList,
-  repetition: repetitionList,
-  set: setList,
 })
 
 export const getters = {
@@ -157,7 +153,7 @@ export const actions = {
         });
         // 配列を変形
         const menuData = []
-        const menuList = deepCopy(state.menuList);
+        const menuList = menuNameList;
         menuList.forEach((item) => {
           const filterMenuData = menuArray.filter((menu) => {
             return menu.menu == item.menuName
