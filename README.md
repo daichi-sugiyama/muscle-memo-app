@@ -1,5 +1,19 @@
 # muscle-memo
 
+## Firebase Setup
+ホームディレクトリ配下に`.env`ファイルを作成
+```bash
+{
+  "apiKey": "<API_KEY>",
+  "authDomain": "<PROJECT_ID>.firebaseapp.com",
+  "databaseURL": "https://<DATABASE_NAME>.firebaseio.com",
+  "projectId": "<PROJECT_ID>",
+  "storageBucket": "<BUCKET>.appspot.com",
+  "messagingSenderId": "<SENDER_ID>"
+}
+```
+参考：https://qiita.com/ririli/items/d0d3a6ae78c1b6e827fc
+
 ## Build Setup
 
 ```bash
