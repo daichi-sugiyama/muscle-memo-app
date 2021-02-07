@@ -27,7 +27,7 @@
           <div class="v-messages error--text">{{ messages.checkbox }}</div>
         </div>
         <div class="mt-4">
-          <p>プログラム</p>
+          <p class="theme--light v-label">プログラム</p>
           <div v-for="(items, index) in menuData" :key="index">
             <v-row>
               <v-col class="d-flex" cols="6">

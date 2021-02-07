@@ -9,7 +9,7 @@
         >
           <v-list-item :key="item.title">
             <v-list-item-content>
-              <v-list-item-title v-text="item.title"></v-list-item-title>
+              <v-list-item-title class="theme--light v-label" v-text="item.title"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-divider v-if="index < items.length - 1" :key="index"></v-divider>

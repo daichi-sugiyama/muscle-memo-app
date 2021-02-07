@@ -37,6 +37,20 @@ export default {
       {
         responsive: false,
         maintainAspectRatio: false,
+        scales: {
+          yAxes: [
+            {
+              //y軸設定
+              display: true, //表示設定
+              scaleLabel: {
+                //軸ラベル設定
+                display: true, //表示設定
+                labelString: "1RM", //ラベル
+                fontSize: 12, //フォントサイズ
+              },
+            },
+          ],
+        },
         legend: {
           display: false,
           onClick: function () {
