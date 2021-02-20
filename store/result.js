@@ -36,6 +36,7 @@ export const actions = {
         });
       });
     programsArray.map((array) => {
+      // 種目ごとに降順にプログラムを並べ替える
       array.programs = decsDate(array.programs)
     })
     commit('setProgramsDataState', programsArray)
