@@ -16,6 +16,9 @@
         </nuxt-link>
       </template>
     </v-list-item-group>
+    <div class="text-right">
+      <v-btn class="ma-2" @click="checkAuth"> ログアウト </v-btn>
+    </div>
   </v-list>
 </template>
 
@@ -32,6 +35,9 @@ export default {
       console.log("ログイン状態:" + this.$store.state.user.isAuth);
       console.log("ユーザーID:" + this.$store.state.user.userId);
     },
+    checkAuth() {
+      this.$store.dispatch('user/signOut')
+    }
   },
   mounted: function () {
     this.$store.dispatch("memos/getMemosData", this.$store.state.user.userId);

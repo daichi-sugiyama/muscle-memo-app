@@ -20,9 +20,6 @@
         </nuxt-link>
       </v-app-bar>
       <nuxt />
-      <div class="text-right">
-        <v-btn class="ma-2" @click="checkAuth"> ログアウト </v-btn>
-      </div>
     </v-card>
   </v-app>
   <v-app v-else>
@@ -44,10 +41,5 @@ export default {
       },
     },
   },
-  methods: {
-    checkAuth() {
-      this.$store.dispatch('user/signOut')
-    }
-  }
 };
 </script>
