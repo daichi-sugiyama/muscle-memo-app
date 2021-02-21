@@ -19,6 +19,7 @@
           </v-btn>
         </nuxt-link>
       </v-app-bar>
+      <button @click="testUserSeeder">seeder</button>
       <nuxt />
     </v-card>
   </v-app>
@@ -29,6 +30,7 @@
 
 <script>
 import Login from "~/components/Login.vue";
+import { testUserSeeder } from "~/utils/testUserSeeder"
 export default {
   components: {
     Login,
@@ -41,5 +43,10 @@ export default {
       },
     },
   },
+  methods: {
+    testUserSeeder() {
+      testUserSeeder()
+    }
+  }
 };
 </script>
