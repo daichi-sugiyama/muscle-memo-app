@@ -78,10 +78,10 @@ const getOnlyDateMaxRM = (programs) => {
       }
     });
     // onlyProgramsのRM値を超えた場合、プログラムを入れ替え
-    if (rmMaxProgram.rm >= targetOnlyProgram.rm) {
-      onlyPrograms.map((program) => {
+    if (rmMaxProgram.rm >= targetOnlyProgram[0].rm) {
+      onlyPrograms.map((program, index) => {
         if(program.createDate === createDate) {
-          program = rmMaxProgram
+          onlyPrograms[index] = rmMaxProgram
         }
       });
     }
