@@ -19,7 +19,9 @@
           </v-btn>
         </nuxt-link>
       </v-app-bar>
-      <button @click="testUserSeeder">seeder</button>
+      <!-- テストデータ発火ボタン -->
+        <!-- <button @click="testUserSeeder">seeder</button> -->
+      <!-- /テストデータ発火ボタン -->
       <nuxt />
     </v-card>
   </v-app>
