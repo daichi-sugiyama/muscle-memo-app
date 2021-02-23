@@ -1,6 +1,11 @@
 # muscle-memo
 ApplicationURL：https://muscle-memo-app.web.app/
 
+
+## ネイティブアプリ風の使い方
+▼参考
+https://github.com/daichi-sugiyama/muscle-memo-app/issues/6
+
 ## Firebase Setup
 ホームディレクトリ配下に`.env`ファイルを作成
 ```bash
