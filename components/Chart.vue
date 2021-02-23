@@ -1,5 +1,6 @@
 <script>
 import { Line, mixins } from "vue-chartjs";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 import moment from "moment";
 
 export default {
@@ -21,6 +22,7 @@ export default {
     },
   },
   mounted() {
+    this.addPlugin(ChartDataLabels);
     this.setData();
     this.renderChart(
       {
@@ -31,6 +33,16 @@ export default {
             backgroundColor: "#f87979",
             data: this.rmData,
             lineTension: 0,
+            datalabels: {
+              font: {
+                weight: "bold",
+              },
+              anchor: "end",
+              align: "end",
+              formatter: function (value, context) {
+                return value + "kg";
+              },
+            },
           },
         ],
       },
@@ -45,7 +57,7 @@ export default {
               scaleLabel: {
                 //軸ラベル設定
                 display: true, //表示設定
-                labelString: "1RM", //ラベル
+                labelString: "1RM（kg）", //ラベル
                 fontSize: 12, //フォントサイズ
               },
             },

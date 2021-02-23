@@ -12,6 +12,7 @@
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.3.5",
     "chart.js": "^2.9.4",
+    "chartjs-plugin-datalabels": "^0.7.0",
     "core-js": "^3.6.5",
     "firebase": "^8.2.2",
     "moment": "^2.29.1",

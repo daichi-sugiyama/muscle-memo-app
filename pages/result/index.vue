@@ -5,7 +5,7 @@
     </v-card-title>
     <v-card-subtitle>
       RMとはレペティション・マキシマム【repetition　maximum】の略で、頭文字からRMと呼ばれ、ある決まった重さに対して何回反復して関節運動を行うことができるかによって運動強度（重さ）を決める方法です。1回が限界の負荷を1RM、最高5回繰り返せる負荷を5RMというように表します。
-      <br>本表では、横軸を最大挙上重量（1RM）とします。
+      <br>本表では、横軸を最大挙上重量（kg）とします。
     </v-card-subtitle>
     <div>
       <div v-for="(items, index) in programsData" :key="index" class="mb-4">
