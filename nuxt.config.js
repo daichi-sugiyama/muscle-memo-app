@@ -6,8 +6,8 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    titleTemplate: '%s - muscle-memo',
-    title: 'muscle-memo',
+    titleTemplate: '筋トレメモアプリ',
+    title: '筋トレメモアプリ',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -40,7 +40,8 @@ export default {
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/pwa'
   ],
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
@@ -64,5 +65,12 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-  }
+  },
+
+  // @nuxtjs/pwa
+  manifest: {
+    name: '筋トレメモアプリ',
+    short_name: '筋トレメモアプリ',
+    lang: 'ja'
+  },
 }
