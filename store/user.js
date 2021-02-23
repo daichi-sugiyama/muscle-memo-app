@@ -16,10 +16,17 @@ export const mutations = {
 }
 
 export const actions = {
-  async signIn({ commit }) {
+  // Google認証
+  async signInGoogle({ commit }) {
     await firebase
       .auth()
       .signInWithRedirect(new firebase.auth.GoogleAuthProvider())
+      .then(res => commit('setSignInState', res.user))
+      .catch((error) => console.log(error))
+  },
+  // テストユーザで認証
+  async signInTestUser({ commit } ) {
+    await firebase.auth().signInWithEmailAndPassword('test@test.com', 'test1234')
       .then(res => commit('setSignInState', res.user))
       .catch((error) => console.log(error))
   },

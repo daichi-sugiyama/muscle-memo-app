@@ -92,19 +92,11 @@
               ></v-select>
             </v-col>
             <v-col
-              v-if="
-                itemIndex == Object.keys(menuData[index].volume).length - 1
-              "
+              v-if="itemIndex == Object.keys(menuData[index].volume).length - 1"
               class="d-flex"
               cols="2"
             >
-              <v-btn
-                fab
-                dark
-                x-small
-                color="indigo"
-                @click="addSetForm(index)"
-              >
+              <v-btn fab dark x-small color="indigo" @click="addSetForm(index)">
                 <v-icon dark>mdi-plus</v-icon>
               </v-btn>
             </v-col>
@@ -153,9 +145,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-btn color="blue" class="mr-5" dark @click="confirmation"
-          >確定</v-btn
-        >
+        <v-btn color="blue" class="mr-5" dark @click="confirmation">確定</v-btn>
       </div>
     </v-form>
   </v-container>
@@ -163,8 +153,14 @@
 <script>
 import firebase from "~/plugins/firebase";
 import db from "~/plugins/db";
-import { menuNameList, weightList, repetitionList, setList } from '~/static/menuData'
-import { deepCopy } from '~/utils/deepCopy'
+import {
+  menuNameList,
+  weightList,
+  repetitionList,
+  setList,
+} from "~/static/menuData";
+import { deepCopy } from "~/utils/deepCopy";
+import { saveMethod, editMethod } from "~/utils/saveFireStore";
 export default {
   data() {
     return {
@@ -225,7 +221,7 @@ export default {
         });
       return target;
     },
-    getProgram() {
+    getPrograms() {
       const programArray = deepCopy(this.menuData)
         .map((item) => {
           return item.volume.map((v) => {
@@ -271,89 +267,25 @@ export default {
         console.log("バリデーション結果：" + validate);
         if (!this.memoId) {
           // 追加
-          await this.saveMethod();
+          await saveMethod(
+            this.getBodyTarget(),
+            this.getPrograms(),
+            this.$store.state.user.userId,
+            firebase.firestore.FieldValue.serverTimestamp()
+          );
         } else {
           // 更新
-          await this.editMethod();
+          await editMethod(
+            this.getBodyTarget(),
+            this.getPrograms(),
+            this.$store.state.user.userId,
+            this.memoId,
+            this.programIdArray,
+            firebase.firestore.FieldValue.serverTimestamp()
+          );
         }
         // ホーム画面に戻る
         this.$router.push("/");
-      }
-    },
-    async saveMethod() {
-      // memoコレクションに保存
-      const target = this.getBodyTarget().join("・");
-      const memo = {
-        target: target,
-        userId: this.$store.state.user.userId,
-        createDate: firebase.firestore.FieldValue.serverTimestamp(),
-      };
-      const memoRef = await db.collection("memo").add(memo);
-      this.getProgram().forEach(async (item) => {
-        // programsコレクションに保存
-        const program = {
-          menu: item.menu,
-          weight: item.weight,
-          repetition: item.repetition,
-          set: item.set,
-          // 小数点第2位を四捨五入
-          rm:
-            (Math.round((item.weight * item.repetition) / 40 + item.weight) *
-              10) /
-            10,
-          userId: this.$store.state.user.userId,
-          memoId: memoRef.id,
-          createDate: firebase.firestore.FieldValue.serverTimestamp(),
-        };
-        await db.collection("programs").add(program);
-      });
-    },
-    async editMethod() {
-      // memoコレクションに更新
-      const target = this.getBodyTarget().join("・");
-      const memo = {
-        target: target,
-        updateDate: firebase.firestore.FieldValue.serverTimestamp(),
-      };
-      await db
-        .collection("memo")
-        .doc(this.$route.query.memoId)
-        .update(memo);
-
-      let programIdArray = JSON.parse(JSON.stringify(this.programIdArray));
-      this.getProgram().forEach(async (item) => {
-        // programsコレクションに更新
-        const program = {
-          menu: item.menu,
-          weight: item.weight,
-          repetition: item.repetition,
-          set: item.set,
-          // 小数点第2位を四捨五入
-          rm:
-            (Math.round((item.weight * item.repetition) / 40 + item.weight) *
-              10) /
-            10,
-          userId: this.$store.state.user.userId,
-        };
-        if (!!item.programId) {
-          // programIdが存在する場合、更新
-          programIdArray = programIdArray.filter((id) => {
-            return id != item.programId;
-          });
-          program.updateDate = firebase.firestore.FieldValue.serverTimestamp();
-          await db.collection("programs").doc(item.programId).update(program);
-        } else {
-          // programIdが存在しない場合、追加
-          program.createDate = firebase.firestore.FieldValue.serverTimestamp();
-          program.memoId = this.memoId;
-          await db.collection("programs").add(program);
-        }
-      });
-      // program削除処理
-      if (programIdArray.length) {
-        programIdArray.forEach(async (id) => {
-          await db.collection("programs").doc(id).delete();
-        });
       }
     },
   },

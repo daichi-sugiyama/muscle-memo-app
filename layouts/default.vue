@@ -19,16 +19,23 @@
           </v-btn>
         </nuxt-link>
       </v-app-bar>
+      <!-- テストデータ発火ボタン -->
+        <!-- <button @click="testUserSeeder">seeder</button> -->
+      <!-- /テストデータ発火ボタン -->
       <nuxt />
     </v-card>
   </v-app>
-  <div v-else>ログイン画面に遷移します</div>
+  <v-app v-else>
+    <Login />
+  </v-app>
 </template>
 
 <script>
+import Login from "~/components/Login.vue";
+import { testUserSeeder } from "~/utils/testUserSeeder"
 export default {
-  data() {
-    return {};
+  components: {
+    Login,
   },
   middleware: "loginCheck",
   computed: {
@@ -38,5 +45,10 @@ export default {
       },
     },
   },
+  methods: {
+    testUserSeeder() {
+      testUserSeeder()
+    }
+  }
 };
 </script>
