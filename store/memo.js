@@ -1,5 +1,5 @@
 import db from '~/plugins/db'
-import { menuNameList } from '~/static/menuData'
+import { menuNameList, bodyTargetList } from '~/static/menuData'
 import { deepCopy } from '~/utils/deepCopy'
 
 const initMenuData = [
@@ -13,14 +13,6 @@ const initMenuData = [
       },
     ],
   },
-];
-const initBodyTarget = [
-  { id: 1, target: "胸", checked: false },
-  { id: 2, target: "肩", checked: false },
-  { id: 3, target: "背中", checked: false },
-  { id: 4, target: "脚", checked: false },
-  { id: 5, target: "二頭", checked: false },
-  { id: 6, target: "三頭", checked: false },
 ];
 
 export const state = () => ({
@@ -52,7 +44,7 @@ export const mutations = {
 
 export const actions = {
   initMemo({ commit, state }) {
-    commit('setBodyTargetState', initBodyTarget);
+    commit('setBodyTargetState', bodyTargetList);
     commit('setMenuDataState', initMenuData);
   },
   changeCheckbox({ commit, state }, target) {
@@ -127,7 +119,7 @@ export const actions = {
     const memoRef = db.collection('memo').doc(memoId);
     memoRef.get().then(function (doc) {
       if (doc.exists) {
-        const bodyTarget = deepCopy(initBodyTarget);
+        const bodyTarget = deepCopy(bodyTargetList);
         const arrayBodyTarget = doc.data().target.split('・');
         bodyTarget.map(item => {
           if (arrayBodyTarget.indexOf(item.target) !== -1) {

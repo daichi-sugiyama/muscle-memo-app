@@ -1,3 +1,13 @@
+// 部位
+export const bodyTargetList = [
+  { id: 1, target: "胸", checked: false },
+  { id: 2, target: "肩", checked: false },
+  { id: 3, target: "背中", checked: false },
+  { id: 4, target: "脚", checked: false },
+  { id: 5, target: "二頭", checked: false },
+  { id: 6, target: "三頭", checked: false },
+];
+
 // 種目
 export const menuNameList = [
   { id: 1, menuName: "ベンチプレス" },
