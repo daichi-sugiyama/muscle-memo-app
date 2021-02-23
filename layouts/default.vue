@@ -49,6 +49,9 @@ export default {
     testUserSeeder() {
       testUserSeeder()
     }
+  },
+  mounted: function() {
+    alert('github action test!!')
   }
 };
 </script>
