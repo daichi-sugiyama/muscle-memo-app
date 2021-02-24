@@ -13,7 +13,12 @@ export const mutations = {
 }
 
 export const actions = {
-  async getMemosData({ commit }, userId) {
+  /**
+   * メモ一覧データをセット
+   * @param {*} param0 
+   * @param {*} userId 
+   */
+  async setMemosData({ commit }, userId) {
     let memosArray = []
     const memosRef = db.collection("memo");
     const querySnapshot = await memosRef.where("userId", "==", userId).get()

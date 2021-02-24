@@ -96,7 +96,7 @@
               class="d-flex"
               cols="2"
             >
-              <v-btn fab dark x-small color="indigo" @click="addSetForm(index)">
+              <v-btn fab dark x-small color="indigo" @click="addProgramForm(index)">
                 <v-icon dark>mdi-plus</v-icon>
               </v-btn>
             </v-col>
@@ -106,7 +106,7 @@
                 dark
                 x-small
                 color="pink"
-                @click="deleteSetForm(index, itemIndex)"
+                @click="deleteProgramForm(index, itemIndex)"
               >
                 <v-icon dark>mdi-minus</v-icon>
               </v-btn>
@@ -192,14 +192,14 @@ export default {
     };
   },
   methods: {
-    addSetForm(index) {
-      this.$store.dispatch("memo/addSetForm", index);
+    addProgramForm(index) {
+      this.$store.dispatch("memo/addProgramForm", index);
     },
     addMenuForm() {
       this.$store.dispatch("memo/addMenuForm");
     },
-    deleteSetForm(index, itemIndex) {
-      this.$store.dispatch("memo/deleteSetForm", { index, itemIndex });
+    deleteProgramForm(index, itemIndex) {
+      this.$store.dispatch("memo/deleteProgramForm", { index, itemIndex });
     },
     deleteMenuForm(index) {
       this.$store.dispatch("memo/deleteMenuForm", index);

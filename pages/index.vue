@@ -40,7 +40,7 @@ export default {
     }
   },
   mounted: function () {
-    this.$store.dispatch("memos/getMemosData", this.$store.state.user.userId);
+    this.$store.dispatch("memos/setMemosData", this.$store.state.user.userId);
   },
 };
 </script>

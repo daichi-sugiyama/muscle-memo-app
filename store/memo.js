@@ -43,10 +43,19 @@ export const mutations = {
 }
 
 export const actions = {
+  /**
+   * メモを初期化
+   * @param {*} param0 
+   */
   initMemo({ commit, state }) {
     commit('setBodyTargetState', bodyTargetList);
     commit('setMenuDataState', initMenuData);
   },
+  /**
+   * 部位のチェックボックスを変更
+   * @param {*} param0 
+   * @param {*} target 
+   */
   changeCheckbox({ commit, state }, target) {
     // チェックボックス変更処理
     const bodyTarget = deepCopy(state.bodyTarget);
@@ -58,11 +67,21 @@ export const actions = {
     });
     commit('setBodyTargetState', bodyTarget);
   },
+  /**
+   * メニューを変更
+   * @param {*} param0 
+   * @param {*} param1 
+   */
   changeMenuSelect({ commit, state }, { event, index }) {
     const menuData = deepCopy(state.menuData);
     menuData[index].menu = event
     commit('setMenuDataState', menuData);
   },
+  /**
+   * メニューのボリューム（重さ、回数、セット）を変更
+   * @param {*} param0 
+   * @param {*} param1 
+   */
   changeMenuVolume({ commit, state }, { event, paramName, index, itemIndex }) {
     const menuData = deepCopy(state.menuData);
     if (paramName == "weight") {
@@ -74,7 +93,12 @@ export const actions = {
     }
     commit('setMenuDataState', menuData);
   },
-  addSetForm({ commit, state }, index) {
+  /**
+   * プログラムを追加
+   * @param {*} param0 
+   * @param {*} index 
+   */
+  addProgramForm({ commit, state }, index) {
     console.log("セット追加");
     const menuData = deepCopy(state.menuData);
     menuData[index].volume.push({
@@ -85,6 +109,10 @@ export const actions = {
     });
     commit('setMenuDataState', menuData);
   },
+  /**
+   * メニューを追加
+   * @param {*} param0 
+   */
   addMenuForm({ commit, state }) {
     console.log("メニュー追加");
     const menuData = deepCopy(state.menuData);
@@ -101,19 +129,33 @@ export const actions = {
     });
     commit('setMenuDataState', menuData);
   },
-  deleteSetForm({ commit, state }, { index, itemIndex }) {
+  /**
+   * プログラムを削除
+   * @param {*} param0 
+   * @param {*} param1 
+   */
+  deleteProgramForm({ commit, state }, { index, itemIndex }) {
     console.log("セット削除");
     const menuData = deepCopy(state.menuData);
     menuData[index].volume.splice(itemIndex, 1);
     commit('setMenuDataState', menuData);
   },
+  /**
+   * メニューを削除
+   * @param {*} param0 
+   * @param {*} index 
+   */
   deleteMenuForm({ commit, state }, index) {
     console.log("メニュー削除");
     const menuData = deepCopy(state.menuData);
     menuData.splice(index, 1);
     commit('setMenuDataState', menuData);
   },
-  // 編集画面のデータをセット
+  /**
+   * 編集データをセット
+   * @param {*} param0 
+   * @param {*} memoId 
+   */
   setEditFrom({ commit, state }, memoId) {
     // bodyTargetをセット
     const memoRef = db.collection('memo').doc(memoId);
