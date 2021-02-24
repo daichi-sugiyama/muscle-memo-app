@@ -1,9 +1,14 @@
 # muscle-memo
 URL：https://muscle-memo-app.web.app/
 
-
 ## ネイティブアプリ風の使い方
 参考：https://github.com/daichi-sugiyama/muscle-memo-app/issues/6
+
+## デプロイ
+手動でのデプロイは不要<br>
+CI/CD（github Actions）はいつ反応するのか
+- masterブランチがpushされたとき
+- masterブランチにマージされたとき
 
 ## Firebase Setup
 ホームディレクトリ配下に`.env`ファイルを作成
