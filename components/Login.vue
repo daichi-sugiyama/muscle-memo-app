@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto text-center" min-width="370">
+  <v-card class="mx-auto text-center">
     <div>
       <v-btn class="my-4" @click="signInGoogle">自分のGoogleアカウントでログイン</v-btn>
     </div>

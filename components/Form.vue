@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid max-width="400" class="mx-auto">
+  <v-container fluid>
     <v-form ref="form" v-model="valid">
       <div>
         <p

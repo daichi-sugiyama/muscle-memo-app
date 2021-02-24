@@ -1,6 +1,6 @@
 <template>
   <v-app v-if="isAuth">
-    <v-card class="mx-auto" min-width="370" style="width: 100%;">
+    <v-card class="limit-width">
       <v-app-bar v-if="$route.path == '/'" color="#BDBDBD">
         <nuxt-link tag="div" to="/result">
           <v-btn> RM </v-btn>
@@ -26,7 +26,7 @@
     </v-card>
   </v-app>
   <v-app v-else>
-    <Login style="width: 100%;" />
+    <Login class="limit-width" />
   </v-app>
 </template>
 
