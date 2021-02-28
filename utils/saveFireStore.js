@@ -1,5 +1,6 @@
 // 追加、更新の共通処理
 import db from "~/plugins/db";
+import { calcRM } from "~/utils/calcRM.js";
 
 /**
  * firestoreに保存
@@ -25,11 +26,7 @@ export const saveMethod = async (bodyTarget, programs, userId, createDate) => {
       weight: item.weight,
       repetition: item.repetition,
       set: item.set,
-      // 小数点第2位を四捨五入
-      rm:
-        (Math.round((item.weight * item.repetition) / 40 + item.weight) *
-          10) /
-        10,
+      rm: calcRM(item.weight, item.repetition),
       userId: userId,
       memoId: memoRef.id,
       createDate: createDate,
@@ -68,11 +65,7 @@ export const editMethod = async (bodyTarget, programs, userId, memoId, programsI
       weight: item.weight,
       repetition: item.repetition,
       set: item.set,
-      // 小数点第2位を四捨五入
-      rm:
-        (Math.round((item.weight * item.repetition) / 40 + item.weight) *
-          10) /
-        10,
+      rm: calcRM(item.weight, item.repetition),
       userId: userId,
     };
     if (!!item.programId) {
