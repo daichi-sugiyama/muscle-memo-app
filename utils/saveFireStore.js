@@ -1,6 +1,14 @@
 // 追加、更新の共通処理
 import db from "~/plugins/db";
 
+/**
+ * firestoreに保存
+ * @param {*} bodyTarget 
+ * @param {*} programs 
+ * @param {*} userId 
+ * @param {*} createDate 
+ * @return void
+ */
 export const saveMethod = async (bodyTarget, programs, userId, createDate) => {
   // memoコレクションに保存
   const target = bodyTarget.join("・");
@@ -30,6 +38,16 @@ export const saveMethod = async (bodyTarget, programs, userId, createDate) => {
   });
 }
 
+/**
+ * firestoreに更新
+ * @param {*} bodyTarget 
+ * @param {*} programs 
+ * @param {*} userId 
+ * @param {*} memoId 
+ * @param {*} programsIdArray 
+ * @param {*} updateDate 
+ * @return void
+ */
 export const editMethod = async (bodyTarget, programs, userId, memoId, programsIdArray, updateDate) => {
   // memoコレクションに更新
   const target = bodyTarget.join("・");
